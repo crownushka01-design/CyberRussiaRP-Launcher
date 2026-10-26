@@ -1,0 +1,10 @@
+{
+  "version": "0.1",
+  "files": [
+    {
+      "path": "test.txt",
+      "size": 49,
+      "sha256": "664afb76b3f3147e23aa74839306f51c13ad9f907537bc6a11f0472823f9e7d6"
+    }
+  ]
+}
