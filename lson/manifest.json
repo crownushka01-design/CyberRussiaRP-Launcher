@@ -1,5 +1,5 @@
 {
-  "version": "0.2-bmw-mods-v1",
+  "version": "client-v1-bmw-mods-v1",
   "files": [
     {
       "path": "test.txt",
@@ -22,6 +22,96 @@
   ],
   "packs": [
     {
+      "name": "client_part_001.zip",
+      "size": 5571931,
+      "sha256": "43ef25d3df8670f7a88d54bf0a095ae052fd234c39c755fc0e2740a5e884031b",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_001.zip"
+    },
+    {
+      "name": "client_part_002.zip",
+      "size": 200755281,
+      "sha256": "ffdb673a0089dbdf8e1c67512a7c365133c3cb501a697cb96b87da3ba34b224b",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_002.zip"
+    },
+    {
+      "name": "client_part_003.zip",
+      "size": 24224978,
+      "sha256": "4332ecc52bd4b47cc6149b1029056f822c29d903240dd7eacc83b84403ca1625",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_003.zip"
+    },
+    {
+      "name": "client_part_004.zip",
+      "size": 30094765,
+      "sha256": "c5a54f4cfc9b26a1b3a41de52388c1f4a2a2a5111e78f628cb8d3f597b0452d2",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_004.zip"
+    },
+    {
+      "name": "client_part_005.zip",
+      "size": 67394,
+      "sha256": "c2367057d257870d08816a4c86f87b9dba6190f0eae6363d550dd149b08ba99e",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_005.zip"
+    },
+    {
+      "name": "client_part_006.zip",
+      "size": 11519126,
+      "sha256": "38cef95a221dc88118ae16605e4dcd5ac20326b9deb0f487a55c810eb85bebd4",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_006.zip"
+    },
+    {
+      "name": "client_part_007.zip",
+      "size": 129904,
+      "sha256": "8d495e7d0bc4f8801df65d2ad74b92d7b4a39edf3e4db65f3dc25740d5766299",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_007.zip"
+    },
+    {
+      "name": "client_part_008.zip",
+      "size": 20884185,
+      "sha256": "3b55e6589e077ffc543269b88d86bf8ec59785dbcff6d5f93a17d2ca9297a6af",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_008.zip"
+    },
+    {
+      "name": "client_part_009.zip",
+      "size": 20172764,
+      "sha256": "2155d863fc14693cf0a120e8849b7ba64923e4f17f14f1a02b1fb0b9d837e68b",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_009.zip"
+    },
+    {
+      "name": "client_part_010.zip",
+      "size": 611365734,
+      "sha256": "566600b4122e34130b5123f544884df29234cdb0f7c9dc4f1c66684e30013f86",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_010.zip"
+    },
+    {
+      "name": "client_part_011.zip",
+      "size": 97925144,
+      "sha256": "5e1ee95958a05fe2e9b7791be4efb17b89d8b02884e080c3a473b452c72dc8d0",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_011.zip"
+    },
+    {
+      "name": "client_part_012.zip",
+      "size": 21203899,
+      "sha256": "fd72e6b0ab9efedd6e15fb6e1b1178ddac3e285d18ac36601e4e9cc5b6523598",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_012.zip"
+    },
+    {
+      "name": "client_part_013.zip",
+      "size": 23702058,
+      "sha256": "02bf0b79f3a2365cbb50bfa75c5924e4a8cf7e101eaca3c22b78e16bf0814ff0",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_013.zip"
+    },
+    {
+      "name": "client_part_014.zip",
+      "size": 22079138,
+      "sha256": "0d92f4429ae11bf5a03b8d2cc331a7456e8e4cf7540793c4ec25bf36dd8f82c0",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_014.zip"
+    },
+    {
+      "name": "client_part_015.zip",
+      "size": 26739099,
+      "sha256": "a168ec10f03edbbbd52fc2db781ca67e76802e7bb40229a99b6e9c582ae73bec",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v1/client_part_015.zip"
+    },
+    {
       "name": "mods_part_001.zip",
       "size": 5870986,
       "sha256": "ed1dab126f7b79efba4ba84f2e19e8c9ec6f07a3ddd35220918e50e24cce09b0",
@@ -29,4 +119,3 @@
     }
   ]
 }
-
