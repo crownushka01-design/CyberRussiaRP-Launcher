@@ -1,5 +1,5 @@
 {
-  "version": "0.2-bmw-test",
+  "version": "0.2-bmw-mods-v1",
   "files": [
     {
       "path": "test.txt",
@@ -19,5 +19,14 @@
       "sha256": "d1bb111293cf36cc524780468f22368c28991457dd2a9df5626081f8b9d1ffab",
       "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/cars-v1/sultan.txd"
     }
+  ],
+  "packs": [
+    {
+      "name": "mods_part_001.zip",
+      "size": 5870986,
+      "sha256": "ed1dab126f7b79efba4ba84f2e19e8c9ec6f07a3ddd35220918e50e24cce09b0",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/mods-v1/mods_part_001.zip"
+    }
   ]
 }
+
