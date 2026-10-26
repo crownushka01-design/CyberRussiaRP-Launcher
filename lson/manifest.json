@@ -1,10 +1,23 @@
 {
-  "version": "0.1",
+  "version": "0.2-bmw-test",
   "files": [
     {
       "path": "test.txt",
       "size": 49,
-      "sha256": "664afb76b3f3147e23aa74839306f51c13ad9f907537bc6a11f0472823f9e7d6"
+      "sha256": "664afb76b3f3147e23aa74839306f51c13ad9f907537bc6a11f0472823f9e7d6",
+      "url": "https://raw.githubusercontent.com/crownushka01-design/CyberRussiaRP-Launcher/main/lson/test.txt"
+    },
+    {
+      "path": "modloader/CYBER_RUSSIA_RP/vehicles/BMW_M5/sultan.dff",
+      "size": 10797056,
+      "sha256": "4f8bc05735f4a1b43a0a99cc8a5edd1fdc6123fd18466a30155bcda27f00d6fc",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/cars-v1/sultan.dff"
+    },
+    {
+      "path": "modloader/CYBER_RUSSIA_RP/vehicles/BMW_M5/sultan.txd",
+      "size": 2828200,
+      "sha256": "d1bb111293cf36cc524780468f22368c28991457dd2a9df5626081f8b9d1ffab",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/cars-v1/sultan.txd"
     }
   ]
 }
