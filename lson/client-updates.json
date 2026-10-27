@@ -6,7 +6,8 @@
   "required": true,
   "files": [],
   "full_client": {
-    "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v2.0/CyberRussiaRP_Client_2.0.zip",
+    "url":"https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/client-v2.0/CyberRussiaRP%20Client%202.0.zip"
+,
     "size": 1130278575,
     "sha256": "39BCEA6AA5F7DFC31944135A733257992C5BDFCDE8660EB8D36AB56CBBD734D5"
   }
