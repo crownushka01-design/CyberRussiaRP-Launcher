@@ -1,6 +1,12 @@
 {
-  "version": "client-v1-bmw-mods-v1",
+  "version": "version": "client-v2-loading",
   "files": [
+     {
+      "path": "CyberLoading.png",
+      "size": 2149955,
+      "sha256": "8a1dcf55bf8cf7a62519d204f132011757af8f48e28c4c24a442ad4dfadb37cf",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/loading-v1/CyberLoading.png"
+    },
     {
       "path": "test.txt",
       "size": 49,
