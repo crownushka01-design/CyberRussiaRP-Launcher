@@ -1,0 +1,14 @@
+{
+  "version": "1.1",
+  "title": "Обновление CYBER RUSSIA RP 1.1",
+  "description": "Новая загрузочная заставка Кремля и улучшения игрового клиента.",
+  "required": false,
+  "files": [
+    {
+      "path": "CyberLoading.png",
+      "size": 2149955,
+      "sha256": "8a1dcf55bf8cf7a62519d204f132011757af8f48e28c4c24a442ad4dfadb37cf",
+      "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/loading-v1/CyberLoading.png"
+    }
+  ]
+}
