@@ -1,29 +1,35 @@
-'use strict';
-// UI DEMO ONLY: do not send credentials to arbitrary URLs or store them in localStorage.
-const $ = id => document.getElementById(id);
-let mode = 'login';
-function configure(next) {
-  mode = next;
-  $('formTitle').textContent = mode === 'login' ? 'АВТОРИЗАЦИЯ' : 'РЕГИСТРАЦИЯ';
-  $('submitButton').innerHTML = mode === 'login' ? 'ВОЙТИ В ИГРУ <span>→</span>' : 'СОЗДАТЬ АККАУНТ <span>→</span>';
-  $('switchMode').textContent = mode === 'login' ? 'СОЗДАТЬ АККАУНТ' : 'УЖЕ ЕСТЬ АККАУНТ? ВОЙТИ';
-  $('confirmWrap').classList.toggle('hidden', mode === 'login');
-  $('confirm').required = mode !== 'login';
-  $('password').value = ''; $('confirm').value = '';
-  $('hint').textContent = 'Демонстрация интерфейса — подключение к серверу ещё не настроено.';
+"use strict";
+const $ = (id) => document.getElementById(id);
+const params = new URLSearchParams(window.location.search);
+const mode = params.get("mode") === "register" ? "register" : "login";
+const nick = params.get("nick") || "Игрок";
+if (/^[A-Za-z0-9_]{3,24}$/.test(nick)) $("nickname").textContent = nick;
+$("formTitle").textContent = mode === "login" ? "АВТОРИЗАЦИЯ" : "РЕГИСТРАЦИЯ";
+$("submitButton").innerHTML = mode === "login" ? "ВОЙТИ В ИГРУ <span>➜</span>" : "СОЗДАТЬ АККАУНТ <span>➜</span>";
+$("confirmWrap").classList.toggle("hidden", mode === "login");
+$("confirm").required = mode === "register";
+$("switchMode").style.display = "none"; // mode is determined by MySQL, not by the user
+$("hint").textContent = mode === "login" ? "Введите пароль вашего аккаунта." : "Придумайте пароль от 6 до 64 символов.";
+for (const [button,field] of [["togglePassword","password"],["toggleConfirm","confirm"]]) {
+  $(button).addEventListener("click", () => { $(field).type = $(field).type === "password" ? "text" : "password"; });
 }
-$('switchMode').addEventListener('click', () => configure(mode === 'login' ? 'register' : 'login'));
-for(const [button,field] of [['togglePassword','password'],['toggleConfirm','confirm']]){
-  $(button).addEventListener('click', () => $(field).type = $(field).type === 'password' ? 'text' : 'password');
-}
-$('authForm').addEventListener('submit', event => {
+$("authForm").addEventListener("submit", (event) => {
   event.preventDefault();
-  const pass = $('password').value;
-  if(mode === 'register' && pass !== $('confirm').value){$('hint').textContent='Пароли не совпадают.';return;}
-  $('hint').textContent='Демо-режим: пароль не отправлен. Подключение к Pawn будет реализовано после проверки CEF.';
-  $('password').value = ''; $('confirm').value = '';
+  const pass = $("password").value;
+  if (pass.length < 6 || pass.length > 64 || /\s/.test(pass)) {
+    $("hint").textContent = "Для CEF используйте 6–64 символа без пробелов.";
+    return;
+  }
+  if (mode === "register" && pass !== $("confirm").value) {
+    $("hint").textContent = "Пароли не совпадают.";
+    return;
+  }
+  if (!window.cef || typeof window.cef.emit !== "function") {
+    $("hint").textContent = "Откройте страницу через GTA с установленным CEF.";
+    return;
+  }
+  window.cef.emit(mode === "login" ? "cyber:login" : "cyber:register", pass);
+  $("password").value = "";
+  $("confirm").value = "";
+  $("hint").textContent = "Запрос отправлен на сервер...";
 });
-// Integration point: set nick after trusted CEF/Pawn message, never hardcode player names in production.
-window.setCyberNickname = function(nick){
-  if(typeof nick === 'string' && /^[A-Za-z0-9_]{3,24}$/.test(nick)) $('nickname').textContent = nick;
-};
