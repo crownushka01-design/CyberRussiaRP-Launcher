@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CYBER RUSSIA RP | Авторизация</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<main class="scene">
+  <div class="sky"></div><div class="hills hill1"></div><div class="hills hill2"></div><div class="hills hill3"></div>
+  <div class="shell">
+    <section class="brand" aria-label="Информация о проекте">
+      <div class="eyebrow"><span class="star">✦</span> PETERSBURG | X4 PAYDAY</div>
+      <h1><span>CYBER</span><strong>RUSSIA RP</strong></h1>
+      <div class="subtitle">Б О Л Ь Ш Е &nbsp; Ч Е М &nbsp; П Р О С Т О &nbsp; И Г Р А</div>
+      <div class="features"><p><b>✦</b> УНИКАЛЬНЫЙ <em>ИГРОВОЙ МИР</em></p><p><b>★</b> АКТИВНАЯ <em>АДМИНИСТРАЦИЯ</em></p><p><b>◆</b> РЕАЛИСТИЧНЫЕ <em>СИСТЕМЫ</em></p><p><b>◈</b> ПОСТОЯННОЕ <em>РАЗВИТИЕ</em></p></div>
+      <div class="welcome"><span>Добро пожаловать</span><small>НА CYBER RUSSIA RP</small></div>
+    </section>
+    <section class="login" aria-label="Вход в игру">
+      <div class="caption">CYBER RUSSIA RP <span class="tag">X4</span></div>
+      <div class="form-content">
+        <h2 id="formTitle">АВТОРИЗАЦИЯ</h2><div class="line"></div>
+        <p class="form-label">ВАШ НИКНЕЙМ</p><div class="nickname" id="nickname">Milton_Moore</div>
+        <form id="authForm" autocomplete="off">
+          <label class="sr-only" for="password">Пароль</label>
+          <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" minlength="1" required maxlength="128"/><button class="eye" id="togglePassword" type="button" aria-label="Показать или скрыть пароль">◉</button></div>
+          <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Повторите пароль" maxlength="128"/><button type="button" class="eye" id="toggleConfirm" aria-label="Показать или скрыть подтверждение">◉</button></div>
+          <button type="submit" class="primary" id="submitButton">ВОЙТИ В ИГРУ <span>→</span></button>
+        </form>
+        <button class="action-link" id="switchMode" type="button">СОЗДАТЬ АККАУНТ</button>
+        <p class="hint" id="hint" aria-live="polite">Демонстрация интерфейса — подключение к серверу ещё не настроено.</p>
+      </div>
+      <div class="city">♜<br/>PETERSBURG<small>ROLEPLAY SERVER</small></div>
+    </section>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
