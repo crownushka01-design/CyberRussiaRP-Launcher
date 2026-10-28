@@ -4,14 +4,126 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CYBER RUSSIA RP — Авторизация</title>
-<link rel="stylesheet" href="style.css?v=auth4-20261029">
-<style>html,body,main.scene{background:transparent!important;background-image:none!important;}</style>
+
+
+<style>
+/* CYBER RUSSIA RP — transparent CEF overlay, reference layout v3 */
+:root { --accent:#a549ee; --light:#fff; color-scheme:dark; }
+* {box-sizing:border-box}
+html,body,.scene {margin:0;width:100%;height:100%;background:transparent!important;overflow:hidden;color:var(--light);font-family:'Segoe UI',Arial,sans-serif}
+.scene {position:relative;isolation:isolate;min-height:100vh}
+.scene::before,.scene::after{display:none!important}
+.brand{position:absolute;left:9.9%;top:50.5%;width:42%;z-index:1;filter:drop-shadow(0 2px 5px rgba(0,0,0,.75))}
+.eyebrow {font-size:clamp(9px,.8vw,12px);letter-spacing:2.6px;font-weight:800;color:#f0d9f4;white-space:nowrap;margin-left:4px}
+.star{font-size:25px;color:var(--accent);vertical-align:middle;margin-right:7px}
+h1{margin:12px 0 0;line-height:.96;letter-spacing:-3.5px;font-family:Arial,'Segoe UI',sans-serif;font-weight:900;font-size:clamp(52px,5.5vw,92px);text-shadow:0 4px 5px rgba(0,0,0,.75),0 0 14px rgba(0,0,0,.28)}
+h1 span,h1 strong{display:block;white-space:nowrap;font-weight:900}
+h1 strong{color:#a846ec}
+.subtitle{font-size:clamp(7px,.57vw,10px);font-weight:800;letter-spacing:5.6px;margin:11px 0 0 3px;color:#f2e6f1;white-space:nowrap}
+.features{margin:32px 0 0 5px}
+.features p{display:flex;align-items:center;margin:0 0 9px;font-weight:900;font-size:clamp(10px,.73vw,13px);line-height:1.12;letter-spacing:.2px}
+.features b{width:46px;color:#ad42f5;font-size:30px;line-height:30px;flex:none;text-shadow:0 0 10px #8a34b2}
+.features em{display:block;font-style:normal;color:#c574ff;font-size:clamp(9px,.67vw,11px);margin-top:3px}
+.welcome{position:relative;margin-top:24px;transform:rotate(-7deg);transform-origin:left center;white-space:nowrap}
+.welcome span{font-family:'Segoe Script','Brush Script MT',Georgia,serif;font-size:clamp(27px,2.3vw,43px);font-style:italic;font-weight:400;text-shadow:0 0 6px #512267}
+.welcome small{display:block;margin-left:75px;font-size:clamp(8px,.56vw,10px);font-weight:800;letter-spacing:6px}
+.topmark{position:absolute;right:2.8%;top:5%;font-weight:900;font-size:clamp(10px,.8vw,14px);letter-spacing:1px;text-align:right;z-index:2;filter:drop-shadow(0 2px 4px #34223b)}
+.topmark span{background:#bd4cff;padding:2px 6px;border-radius:2px}
+.topmark small{display:block;color:#e0c5e0;font-size:8px;line-height:1.25;letter-spacing:2px;margin-right:8px}
+.login{position:absolute;left:75.5%;top:48.5%;transform:translateY(-3%);width:22.5%;z-index:2;filter:drop-shadow(0 2px 5px rgba(0,0,0,.75))}
+h2{margin:0;font-size:clamp(16px,1.4vw,25px);letter-spacing:5.5px;white-space:nowrap;font-weight:850}
+.line{width:70px;height:2px;background:#b848fc;margin:15px 0 34px}
+.form-label{font-size:clamp(8px,.64vw,11px);letter-spacing:2px;color:#ede0ef;margin-bottom:8px;font-weight:700}
+.nickname{font-size:clamp(16px,1.12vw,21px);font-weight:850;margin-bottom:19px;text-shadow:0 2px 4px #000}
+.input-wrap{height:clamp(45px,3vw,57px);display:flex;align-items:center;background:rgba(12,8,23,.82);border:1px solid #a446e4;border-radius:5px;margin-bottom:12px;box-shadow:0 0 10px rgba(66,19,81,.35)}
+.lock{font-size:19px;padding:0 14px;color:#eee}
+.input-wrap input{background:transparent;border:0;outline:0;color:#fff;font-size:clamp(11px,.84vw,15px);min-width:0;flex:1;width:100%;font-family:inherit}
+.input-wrap input::placeholder{color:#a9a2b0;opacity:1}
+.eye{background:transparent;border:0;color:white;font-size:17px;padding:7px 12px;cursor:pointer}
+.primary{margin-top:3px;width:100%;height:clamp(48px,3.1vw,59px);background:linear-gradient(#b558fb,#782bca);border:0;border-radius:5px;color:#fff;cursor:pointer;font-size:clamp(11px,.85vw,15px);font-weight:900;letter-spacing:1.2px;box-shadow:0 4px 12px rgba(18,9,28,.6);position:relative}
+.primary span{position:absolute;right:13px;font-size:22px;top:50%;transform:translateY(-50%)}
+.action-link{display:block;margin:17px auto 0;background:transparent;border:0;border-bottom:1px solid #b747ec;color:#fff;padding:2px 0 5px;font-size:clamp(9px,.63vw,11px);letter-spacing:1.7px;font-weight:900;cursor:pointer}
+.hint{font-size:10px;color:#eee;opacity:.82;text-align:center;line-height:1.45;max-height:36px;overflow:hidden}
+.city{position:absolute;bottom:4%;right:3%;text-align:center;font-size:24px;color:#ded4db;letter-spacing:2px;text-shadow:0 1px 5px #000;line-height:1.1}
+.city b{display:block;font-weight:500;font-size:12px;letter-spacing:4px}
+.city small{display:block;font-size:8px;letter-spacing:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hidden{display:none!important}
+@media(max-aspect-ratio:4/3){.brand{left:5%;top:42%;width:45%}h1{font-size:clamp(36px,6.3vw,75px)}.login{left:57%;top:42%;width:37%}.features{margin-top:16px}.welcome{margin-top:18px}.topmark{top:2%}}
+
+/* V5: readable layout for 16:9, overlay remains transparent */
+.brand{top:32%;left:8%;width:43%;filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}
+.brand h1{font-size:clamp(54px,5.0vw,82px);letter-spacing:-1.7px}
+.login{top:33%;left:60.5%;width:25.7%;transform:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.65))}
+.login h2{font-size:clamp(22px,1.65vw,31px);letter-spacing:4px}
+.form-label{font-size:clamp(11px,.77vw,14px);letter-spacing:1.5px}
+.nickname{font-size:clamp(19px,1.32vw,26px);margin-bottom:22px}
+.input-wrap{height:clamp(52px,3.4vw,63px)}
+.input-wrap input{font-size:clamp(14px,.94vw,18px)}
+.primary{height:clamp(53px,3.4vw,64px);font-size:clamp(13px,.94vw,18px)}
+.features p{font-size:clamp(12px,.82vw,15px)}
+.features em{font-size:clamp(11px,.73vw,13px)}
+.city{display:none!important}
+.topmark small{display:none!important}
+.hint{font-size:12px;opacity:.95}
+@media(max-width:1100px){.brand{left:5%;top:30%;width:47%}.brand h1{font-size:5vw}.login{left:56%;top:29%;width:39%}}
+
+/* Production readability adjustments */
+.brand { top: 23%; left: 7.5%; }
+.login { top: 27%; left: 63%; width: 27%; }
+.nickname { text-shadow: 0 2px 7px rgba(0,0,0,.9); }
+.form-label, .hint { text-shadow:0 2px 5px rgba(0,0,0,.9); }
+.primary { font-weight:900; }
+
+/* V7: force the hero content above the screen midpoint */
+.brand { top: 24% !important; left: 8% !important; }
+.login { top: 32% !important; left: 63% !important; }
+@media (max-width: 1100px) { .brand { top: 20% !important; left: 5% !important; } .login { top: 26% !important; left: 56% !important; } }
+
+/* V8 fixed high positions */
+.scene > .brand{top:17%!important;bottom:auto!important;}
+.scene > .login{top:22%!important;bottom:auto!important;}
+
+/* V9: unique standalone file -- hard anchor to top */
+html,body,.scene { height:100%; min-height:100%; background:transparent!important; }
+.scene {position:relative!important; height:100vh!important; min-height:100vh!important; overflow:hidden!important;}
+.scene > section.brand { position:absolute!important; top:8vh!important; bottom:auto!important; left:7vw!important; right:auto!important; transform:none!important; margin:0!important; width:44vw!important; }
+.scene > section.login { position:absolute!important; top:14vh!important; bottom:auto!important; left:64vw!important; right:auto!important; transform:none!important; margin:0!important; width:29vw!important; }
+.topmark{top:3vh!important;right:3vw!important}
+.topmark small,.city{display:none!important}
+.brand .features{margin-top:22px!important}
+.brand .welcome{margin-top:19px!important}
+@media(max-width:1100px){.scene > section.brand{top:7vh!important;left:4vw!important;width:47vw!important}.scene > section.login{top:12vh!important;left:55vw!important;width:40vw!important}.brand h1{font-size:5vw!important}}
+
+
+/* V10: mid-height editorial composition, high-DPI readable elements */
+.scene > section.brand {top:24vh!important;left:7.5vw!important;width:44vw!important;}
+.scene > section.login {top:29vh!important;left:63vw!important;width:30vw!important;}
+.brand h1 {font-size:clamp(66px,5.4vw,94px)!important;letter-spacing:-2px!important;line-height:.97!important;}
+.eyebrow{font-size:clamp(12px,.85vw,15px)!important;letter-spacing:2px!important;}
+.features p{font-size:clamp(13px,.88vw,17px)!important}
+.features em{font-size:clamp(12px,.75vw,15px)!important}
+.login h2{font-size:clamp(26px,1.85vw,34px)!important;letter-spacing:3.6px!important;}
+.login .form-label{font-size:clamp(12px,.8vw,15px)!important;}
+.login .nickname{font-size:clamp(21px,1.4vw,27px)!important;}
+.login .input-wrap{min-height:56px!important;height:clamp(56px,3.65vw,68px)!important;}
+.login input{font-size:clamp(16px,1vw,19px)!important;}
+.login .primary{height:clamp(56px,3.7vw,68px)!important;font-size:clamp(15px,1vw,19px)!important;}
+.brand,.login{filter:drop-shadow(0 2px 3px rgba(0,0,0,.7))!important;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.city,.topmark small{display:none!important}
+.layout-toggle{border:1px solid rgba(197,129,255,.7);background:rgba(167,65,233,.15);color:#fff;font-family:'Segoe UI',Arial,sans-serif;letter-spacing:.5px;font-weight:800;font-size:14px;border-radius:5px;cursor:pointer;min-width:48px;height:35px;margin-right:8px;}
+.layout-toggle:focus-visible{outline:2px solid #e4bcff;outline-offset:1px}
+.layout-note{font-size:12px;color:#eee;text-shadow:0 2px 3px #000;opacity:.98;margin:10px 0;text-align:center}
+.input-wrap input{min-width:0}
+@media(max-width:1100px){.scene > section.brand{top:22vh!important;left:5vw!important;width:49vw!important}.scene > section.login{top:28vh!important;left:56vw!important;width:40vw!important}.brand h1{font-size:6vw!important}}
+
+</style>
 </head>
 <body>
 <main class="scene">
-  <div class="topmark">CYBER RUSSIA RP <span>X4</span><small>PETERSBURG&nbsp;&nbsp;X4<br>PAYDAY</small></div>
+  <div class="topmark">CYBER RUSSIA RP <span>X4</span><small></small></div>
   <section class="brand" aria-label="CYBER RUSSIA RP">
-    <div class="eyebrow"><span class="star">✦</span> PETERSBURG | X4 PAYDAY</div>
+    <div class="eyebrow"><span class="star">✦</span> CYBER RUSSIA | X4 PAYDAY</div>
     <h1><span>CYBER</span><strong>RUSSIA RP</strong></h1>
     <div class="subtitle">БОЛЬШЕ ЧЕМ ПРОСТО ИГРА</div>
     <div class="features">
@@ -28,15 +140,117 @@
     <div class="nickname" id="nickname">Milton_Moore</div>
     <form id="authForm" autocomplete="off">
       <label class="sr-only" for="password">Пароль</label>
-      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
-      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
+      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="layout-toggle" id="layoutToggle" type="button" title="Раскладка внутри поля пароля: английская или русская" aria-label="Переключить раскладку пароля">EN</button><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
+      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="layout-toggle" id="layoutConfirm" type="button" aria-label="Переключить раскладку подтверждения">EN</button><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
+      <p class="layout-note" id="layoutNote">Раскладка ввода: EN · переключение рядом с паролем</p>
       <button type="submit" class="primary" id="submitButton">ВОЙТИ В ИГРУ <span>➜</span></button>
     </form>
     <button class="action-link" id="switchMode" type="button">СОЗДАТЬ АККАУНТ</button>
     <p class="hint" id="hint" aria-live="polite">Введите пароль и нажмите кнопку входа.</p>
   </section>
-  <div class="city">♜<br><b>PETERSBURG</b><small>ROLEPLAY SERVER</small></div>
+  
 </main>
-<script src="app.js?v=auth4-20261029"></script>
+
+<script>
+"use strict";
+const $ = (id) => document.getElementById(id);
+const params = new URLSearchParams(window.location.search);
+const mode = params.get("mode") === "register" ? "register" : "login";
+const nick = params.get("nick") || "Игрок";
+if (/^[A-Za-z0-9_]{3,24}$/.test(nick)) $("nickname").textContent = nick;
+$("formTitle").textContent = mode === "login" ? "АВТОРИЗАЦИЯ" : "РЕГИСТРАЦИЯ";
+$("submitButton").innerHTML = mode === "login" ? "ВОЙТИ В ИГРУ <span>➜</span>" : "СОЗДАТЬ АККАУНТ <span>➜</span>";
+$("confirmWrap").classList.toggle("hidden", mode === "login");
+$("confirm").required = mode === "register";
+$("switchMode").style.display = "none"; // mode is determined by MySQL, not by the user
+$("hint").textContent = mode === "login" ? "Введите пароль вашего аккаунта." : "Придумайте пароль от 6 до 64 символов.";
+for (const [button,field] of [["togglePassword","password"],["toggleConfirm","confirm"]]) {
+  $(button).addEventListener("click", () => { $(field).type = $(field).type === "password" ? "text" : "password"; });
+}
+
+// CEF/Chrome cannot switch the Windows keyboard layout. Instead, map physical keys
+// to the selected RU/EN alphabet in each password field. No password is transmitted
+// to any webpage, analytics, or local storage by this code.
+// One shared visual input layout for BOTH login and registration fields.
+// Alt+Shift toggles RU/EN when the page receives the keyboard event.
+// This does not change the Windows system layout.
+let cefInputLayout = 'EN';
+const rows=[
+ ['KeyQ','q','й'],['KeyW','w','ц'],['KeyE','e','у'],['KeyR','r','к'],['KeyT','t','е'],['KeyY','y','н'],['KeyU','u','г'],['KeyI','i','ш'],['KeyO','o','щ'],['KeyP','p','з'],
+ ['KeyA','a','ф'],['KeyS','s','ы'],['KeyD','d','в'],['KeyF','f','а'],['KeyG','g','п'],['KeyH','h','р'],['KeyJ','j','о'],['KeyK','k','л'],['KeyL','l','д'],
+ ['KeyZ','z','я'],['KeyX','x','ч'],['KeyC','c','с'],['KeyV','v','м'],['KeyB','b','и'],['KeyN','n','т'],['KeyM','m','ь'],
+ ['BracketLeft','[','х'],['BracketRight',']','ъ'],['Semicolon',';','ж'],['Quote',"'",'э'],['Comma',',','б'],['Period','.','ю'],['Backquote','`','ё']
+];
+const keyMap={}; for(const [code,en,ru] of rows)keyMap[code]={EN:en,RU:ru};
+function refreshInputLayout(){
+  $('layoutToggle').textContent = cefInputLayout;
+  $('layoutConfirm').textContent = cefInputLayout;
+  $('layoutNote').textContent = 'Язык ввода: '+cefInputLayout+' · Alt + Shift или кнопка RU / EN';
+}
+function toggleInputLayout(){
+  cefInputLayout = cefInputLayout==='EN' ? 'RU' : 'EN';
+  refreshInputLayout();
+}
+for(const id of ['layoutToggle','layoutConfirm']) {
+  $(id).addEventListener('click',()=>{toggleInputLayout(); $('password').focus();});
+}
+// Some Windows configurations intercept Alt+Shift before CEF receives it.
+// Keep the on-screen button as a reliable fallback.
+let comboConsumed = false;
+window.addEventListener('keydown', (ev) => {
+  const isShift = ev.key === 'Shift' || ev.code === 'ShiftLeft' || ev.code === 'ShiftRight';
+  const isAlt = ev.key === 'Alt' || ev.code === 'AltLeft' || ev.code === 'AltRight';
+  if (!ev.repeat && !comboConsumed && ((isShift && ev.altKey) || (isAlt && ev.shiftKey))) {
+    ev.preventDefault();
+    comboConsumed=true;
+    toggleInputLayout();
+  }
+}, true);
+window.addEventListener('keyup', (ev) => {
+  if (ev.key==='Shift' || ev.key==='Alt' || ev.code.startsWith('Shift') || ev.code.startsWith('Alt')) comboConsumed=false;
+}, true);
+window.addEventListener('blur', () => { comboConsumed=false; });
+refreshInputLayout();
+for(const id of ['password','confirm']){
+ $(id).setAttribute('autocomplete','new-password');
+ $(id).setAttribute('autocapitalize','off');
+ $(id).setAttribute('spellcheck','false');
+ $(id).addEventListener('keydown',(ev)=>{
+   if(ev.ctrlKey||ev.altKey||ev.metaKey||ev.isComposing)return;
+   const entry=keyMap[ev.code];
+   if(!entry)return;
+   // Prevent native keyboard layout from choosing a different character.
+   ev.preventDefault();
+   const ch=entry[cefInputLayout];
+   const text=ev.shiftKey?ch.toUpperCase():ch;
+   const inp=$(id); const start=inp.selectionStart, end=inp.selectionEnd;
+   if(inp.value.length-(end-start)>=inp.maxLength)return;
+   inp.setRangeText(text,start,end,'end');
+   inp.dispatchEvent(new Event('input',{bubbles:true}));
+ });
+}
+
+$("authForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  const pass = $("password").value;
+  if (pass.length < 6 || pass.length > 64 || /\s/.test(pass)) {
+    $("hint").textContent = "Для CEF используйте 6–64 символа без пробелов.";
+    return;
+  }
+  if (mode === "register" && pass !== $("confirm").value) {
+    $("hint").textContent = "Пароли не совпадают.";
+    return;
+  }
+  if (!window.cef || typeof window.cef.emit !== "function") {
+    $("hint").textContent = "Откройте страницу через GTA с установленным CEF.";
+    return;
+  }
+  window.cef.emit(mode === "login" ? "cyber:login" : "cyber:register", pass);
+  $("password").value = "";
+  $("confirm").value = "";
+  $("hint").textContent = "Запрос отправлен на сервер...";
+});
+
+</script>
 </body>
 </html>
