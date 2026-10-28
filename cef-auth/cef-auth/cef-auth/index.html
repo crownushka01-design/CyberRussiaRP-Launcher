@@ -117,6 +117,11 @@ html,body,.scene { height:100%; min-height:100%; background:transparent!importan
 .input-wrap input{min-width:0}
 @media(max-width:1100px){.scene > section.brand{top:22vh!important;left:5vw!important;width:49vw!important}.scene > section.login{top:28vh!important;left:56vw!important;width:40vw!important}.brand h1{font-size:6vw!important}}
 
+/* V12: stable readable position at common 16:9 resolutions */
+.scene > section.brand{top:20vh!important;left:7.5vw!important}
+.scene > section.login{top:25vh!important;left:61vw!important;width:31vw!important}
+.brand h1,.login h2,.login .nickname{text-shadow:0 2px 5px rgba(0,0,0,.9)}
+@media(max-width:1100px){.scene > section.brand{top:20vh!important;left:4vw!important}.scene > section.login{top:25vh!important;left:54vw!important;width:42vw!important}}
 </style>
 </head>
 <body>
@@ -137,12 +142,12 @@ html,body,.scene { height:100%; min-height:100%; background:transparent!importan
   <section class="login" aria-label="Вход в игру">
     <h2 id="formTitle">АВТОРИЗАЦИЯ</h2><div class="line"></div>
     <div class="form-label">ВАШ НИКНЕЙМ</div>
-    <div class="nickname" id="nickname">Milton_Moore</div>
+    <div class="nickname" id="nickname">Игрок</div>
     <form id="authForm" autocomplete="off">
       <label class="sr-only" for="password">Пароль</label>
-      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="layout-toggle" id="layoutToggle" type="button" title="Раскладка внутри поля пароля: английская или русская" aria-label="Переключить раскладку пароля">EN</button><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
-      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="layout-toggle" id="layoutConfirm" type="button" aria-label="Переключить раскладку подтверждения">EN</button><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
-      <p class="layout-note" id="layoutNote">Раскладка ввода: EN · переключение рядом с паролем</p>
+      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="layout-toggle" id="layoutToggle" type="button" title="AUTO: системная Windows; EN / RU: ручной режим" aria-label="Переключить раскладку пароля">AUTO</button><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
+      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="layout-toggle" id="layoutConfirm" type="button" aria-label="Переключить раскладку подтверждения">AUTO</button><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
+      <p class="layout-note" id="layoutNote">Системная раскладка: определяется при вводе</p>
       <button type="submit" class="primary" id="submitButton">ВОЙТИ В ИГРУ <span>➜</span></button>
     </form>
     <button class="action-link" id="switchMode" type="button">СОЗДАТЬ АККАУНТ</button>
@@ -168,67 +173,62 @@ for (const [button,field] of [["togglePassword","password"],["toggleConfirm","co
   $(button).addEventListener("click", () => { $(field).type = $(field).type === "password" ? "text" : "password"; });
 }
 
-// CEF/Chrome cannot switch the Windows keyboard layout. Instead, map physical keys
-// to the selected RU/EN alphabet in each password field. No password is transmitted
-// to any webpage, analytics, or local storage by this code.
-// One shared visual input layout for BOTH login and registration fields.
-// Alt+Shift toggles RU/EN when the page receives the keyboard event.
-// This does not change the Windows system layout.
-let cefInputLayout = 'EN';
-const rows=[
+// By default use native Windows keyboard layout; never rewrite typed password keys.
+// Optional override is available when the game captures Windows layout shortcuts.
+let inputMode = 'AUTO';
+const chars = [
  ['KeyQ','q','й'],['KeyW','w','ц'],['KeyE','e','у'],['KeyR','r','к'],['KeyT','t','е'],['KeyY','y','н'],['KeyU','u','г'],['KeyI','i','ш'],['KeyO','o','щ'],['KeyP','p','з'],
  ['KeyA','a','ф'],['KeyS','s','ы'],['KeyD','d','в'],['KeyF','f','а'],['KeyG','g','п'],['KeyH','h','р'],['KeyJ','j','о'],['KeyK','k','л'],['KeyL','l','д'],
  ['KeyZ','z','я'],['KeyX','x','ч'],['KeyC','c','с'],['KeyV','v','м'],['KeyB','b','и'],['KeyN','n','т'],['KeyM','m','ь'],
  ['BracketLeft','[','х'],['BracketRight',']','ъ'],['Semicolon',';','ж'],['Quote',"'",'э'],['Comma',',','б'],['Period','.','ю'],['Backquote','`','ё']
 ];
-const keyMap={}; for(const [code,en,ru] of rows)keyMap[code]={EN:en,RU:ru};
-function refreshInputLayout(){
-  $('layoutToggle').textContent = cefInputLayout;
-  $('layoutConfirm').textContent = cefInputLayout;
-  $('layoutNote').textContent = 'Язык ввода: '+cefInputLayout+' · Alt + Shift или кнопка RU / EN';
+const physicalMap = Object.fromEntries(chars.map(([code,en,ru])=>[code,{EN:en,RU:ru}]));
+let detectedLayout = 'EN';
+function renderLayout(){
+  const name=inputMode==='AUTO' ? 'AUTO' : inputMode;
+  $('layoutToggle').textContent=name;
+  $('layoutConfirm').textContent=name;
+  $('layoutNote').textContent=inputMode==='AUTO'
+    ? 'Системная раскладка: '+detectedLayout+' · переключайте Alt + Shift в Windows · кнопка AUTO = ручной режим'
+    : 'Ручной ввод '+inputMode+' · нажимайте '+inputMode+' для смены языка или возврата AUTO';
 }
-function toggleInputLayout(){
-  cefInputLayout = cefInputLayout==='EN' ? 'RU' : 'EN';
-  refreshInputLayout();
+function nextInputMode(){
+  inputMode= inputMode==='AUTO' ? 'EN' : inputMode==='EN' ? 'RU' : 'AUTO';
+  renderLayout();
 }
-for(const id of ['layoutToggle','layoutConfirm']) {
-  $(id).addEventListener('click',()=>{toggleInputLayout(); $('password').focus();});
+for(const id of ['layoutToggle','layoutConfirm']){
+  $(id).addEventListener('click',()=>{ nextInputMode(); $('password').focus(); });
 }
-// Some Windows configurations intercept Alt+Shift before CEF receives it.
-// Keep the on-screen button as a reliable fallback.
-let comboConsumed = false;
-window.addEventListener('keydown', (ev) => {
-  const isShift = ev.key === 'Shift' || ev.code === 'ShiftLeft' || ev.code === 'ShiftRight';
-  const isAlt = ev.key === 'Alt' || ev.code === 'AltLeft' || ev.code === 'AltRight';
-  if (!ev.repeat && !comboConsumed && ((isShift && ev.altKey) || (isAlt && ev.shiftKey))) {
-    ev.preventDefault();
-    comboConsumed=true;
-    toggleInputLayout();
-  }
-}, true);
-window.addEventListener('keyup', (ev) => {
-  if (ev.key==='Shift' || ev.key==='Alt' || ev.code.startsWith('Shift') || ev.code.startsWith('Alt')) comboConsumed=false;
-}, true);
-window.addEventListener('blur', () => { comboConsumed=false; });
-refreshInputLayout();
 for(const id of ['password','confirm']){
- $(id).setAttribute('autocomplete','new-password');
- $(id).setAttribute('autocapitalize','off');
- $(id).setAttribute('spellcheck','false');
- $(id).addEventListener('keydown',(ev)=>{
-   if(ev.ctrlKey||ev.altKey||ev.metaKey||ev.isComposing)return;
-   const entry=keyMap[ev.code];
+ const field=$(id);
+ field.autocomplete='off';
+ field.autocapitalize='off';
+ field.spellcheck=false;
+ field.addEventListener('keydown', ev=>{
+   // When AUTO, Chromium uses exactly the character produced by Windows.
+   if(inputMode==='AUTO' || ev.ctrlKey || ev.altKey || ev.metaKey || ev.isComposing)return;
+   const entry=physicalMap[ev.code];
    if(!entry)return;
-   // Prevent native keyboard layout from choosing a different character.
    ev.preventDefault();
-   const ch=entry[cefInputLayout];
-   const text=ev.shiftKey?ch.toUpperCase():ch;
-   const inp=$(id); const start=inp.selectionStart, end=inp.selectionEnd;
-   if(inp.value.length-(end-start)>=inp.maxLength)return;
-   inp.setRangeText(text,start,end,'end');
-   inp.dispatchEvent(new Event('input',{bubbles:true}));
+   const ch=entry[inputMode];
+   const ins=ev.shiftKey ? ch.toUpperCase() : ch;
+   const a=field.selectionStart, b=field.selectionEnd;
+   if(field.value.length-(b-a)>=field.maxLength)return;
+   field.setRangeText(ins,a,b,'end');
+   field.dispatchEvent(new Event('input',{bubbles:true}));
+ });
+ field.addEventListener('input', ev=>{
+   if(inputMode!=='AUTO')return;
+   // Only show what was actually typed, never translate the password.
+   const d=ev.data || '';
+   if(/[а-яё]/i.test(d)) detectedLayout='RU';
+   else if(/[a-z]/i.test(d)) detectedLayout='EN';
+   renderLayout();
  });
 }
+// Browsers may not be told immediately when Windows changes language.
+// The indicator updates on the next actual letter typed, and passwords stay exact.
+renderLayout();
 
 $("authForm").addEventListener("submit", (event) => {
   event.preventDefault();
