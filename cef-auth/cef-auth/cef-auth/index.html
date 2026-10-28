@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CYBER RUSSIA RP — Авторизация</title>
+
+
+<link rel="stylesheet" href="style.css?v=16">
+</head>
+<body>
+<main class="scene">
+  <div class="topmark">САНКТ-ПЕТЕРБУРГ <span>X4</span></div>
+  <section class="brand" aria-label="CYBER RUSSIA RP">
+    <div class="eyebrow"><span class="star">✦</span> САНКТ-ПЕТЕРБУРГ | X4 PAYDAY</div>
+    <h1><span>CYBER</span><strong>RUSSIA RP</strong></h1>
+    <div class="subtitle">БОЛЬШЕ ЧЕМ ПРОСТО ИГРА</div>
+    <div class="features">
+      <p><b>♟</b><span>УНИКАЛЬНЫЙ<em>ИГРОВОЙ МИР</em></span></p>
+      <p><b>★</b><span>АКТИВНАЯ<em>АДМИНИСТРАЦИЯ</em></span></p>
+      <p><b>♧</b><span>РЕАЛИСТИЧНЫЕ<em>СИСТЕМЫ</em></span></p>
+      <p><b>◧</b><span>ПОСТОЯННОЕ<em>РАЗВИТИЕ</em></span></p>
+    </div>
+    <div class="welcome"><span>Добро пожаловать</span><small>НА CYBER RUSSIA RP</small></div>
+  </section>
+  <section class="login" aria-label="Вход в игру">
+    <h2 id="formTitle">АВТОРИЗАЦИЯ</h2><div class="line"></div>
+    <div class="form-label">ВАШ НИКНЕЙМ</div>
+    <div class="nickname" id="nickname">Игрок</div>
+    <form id="authForm" autocomplete="off">
+      <label class="sr-only" for="password">Пароль</label>
+      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="layout-toggle" id="layoutToggle" type="button" title="AUTO: системная Windows; EN / RU: ручной режим" aria-label="Переключить раскладку пароля">AUTO</button><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
+      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="layout-toggle" id="layoutConfirm" type="button" aria-label="Переключить раскладку подтверждения">AUTO</button><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
+      <p class="layout-note" id="layoutNote">Системная раскладка: определяется при вводе</p>
+      <button type="submit" class="primary" id="submitButton">ВОЙТИ В ИГРУ <span>➜</span></button>
+    </form>
+    <button class="action-link" id="switchMode" type="button">СОЗДАТЬ АККАУНТ</button>
+    <p class="hint" id="hint" aria-live="polite">Введите пароль и нажмите кнопку входа.</p>
+  </section>
+  
+</main>
+
+<script src="app.js?v=16"></script>
+</body>
+</html>
