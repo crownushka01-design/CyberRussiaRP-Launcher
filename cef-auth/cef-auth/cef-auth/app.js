@@ -40,7 +40,7 @@ for (const id of ['password','confirm']) {
   field.spellcheck = false;
   field.addEventListener('input', () => updateLanguage(field.value));
 }
-$('layoutNote').textContent = 'Язык ввода: ENG · Alt + Shift переключает Windows';
+$('layoutNote').textContent = 'ENG / РУС: язык определяется по введённым символам';
 
 $("authForm").addEventListener("submit", (event) => {
   event.preventDefault();
