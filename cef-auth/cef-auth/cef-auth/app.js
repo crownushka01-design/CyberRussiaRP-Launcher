@@ -10,7 +10,7 @@ $("submitButton").innerHTML = mode === "login" ? "ВОЙТИ В ИГРУ <span>�
 $("confirmWrap").classList.toggle("hidden", mode === "login");
 $("confirm").required = mode === "register";
 $("switchMode").style.display = "none"; // mode is determined by MySQL, not by the user
-$("hint").textContent = mode === "login" ? "Введите пароль вашего аккаунта." : "Придумайте пароль от 6 до 64 символов.";
+$("hint").textContent = "";
 for (const [button,field] of [["togglePassword","password"],["toggleConfirm","confirm"]]) {
   $(button).addEventListener("click", () => { $(field).type = $(field).type === "password" ? "text" : "password"; });
 }
@@ -63,3 +63,8 @@ $("authForm").addEventListener("submit", (event) => {
   $("hint").textContent = "Запрос отправлен на сервер...";
 });
 
+
+const hintNode = $("hint");
+const syncHint = () => { hintNode.hidden = !hintNode.textContent.trim(); };
+new MutationObserver(syncHint).observe(hintNode, {childList:true,characterData:true,subtree:true});
+syncHint();
