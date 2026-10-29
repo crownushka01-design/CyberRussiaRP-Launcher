@@ -3,8 +3,16 @@
 const $ = (id) => document.getElementById(id);
 const params = new URLSearchParams(window.location.search);
 const mode = params.get("mode") === "register" ? "register" : "login";
-const nick = params.get("nick") || "Игрок";
-if (/^[A-Za-z0-9_]{3,24}$/.test(nick)) $("nickname").textContent = nick;
+const nick = params.get("nick") || "";
+const nicknameElement = $("nickname");
+if (/^[A-Za-z0-9_]{3,24}$/.test(nick)) {
+  nicknameElement.textContent = nick;
+  nicknameElement.style.visibility = "visible";
+} else {
+  // Don't flash a fake nickname while waiting for server-supplied identity.
+  nicknameElement.textContent = "";
+  nicknameElement.style.visibility = "hidden";
+}
 $("formTitle").textContent = mode === "login" ? "АВТОРИЗАЦИЯ" : "РЕГИСТРАЦИЯ";
 $("submitButton").innerHTML = mode === "login" ? "ВОЙТИ В ИГРУ <span>➜</span>" : "СОЗДАТЬ АККАУНТ <span>➜</span>";
 $("confirmWrap").classList.toggle("hidden", mode === "login");
