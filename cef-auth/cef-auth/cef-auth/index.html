@@ -112,10 +112,10 @@ html, body, .scene { background:transparent !important; }
     <div class="form-label">ВАШ НИКНЕЙМ</div>
     <div class="nickname" id="nickname">Игрок</div>
     <form id="authForm" autocomplete="off">
-      <label class="sr-only" for="password">Пароль</label>
-      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="layout-toggle" id="layoutToggle" type="button" title="AUTO: системная Windows; EN / RU: ручной режим" aria-label="Переключить раскладку пароля">AUTO</button><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
-      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="layout-toggle" id="layoutConfirm" type="button" aria-label="Переключить раскладку подтверждения">AUTO</button><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
-      <p class="layout-note" id="layoutNote">Системная раскладка: определяется при вводе</p>
+      <label class="sr-only" for="password">Новый пароль</label>
+      <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Новый пароль" maxlength="128" required><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
+      <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="email" placeholder="Ваш Gmail" maxlength="128"><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
+      <p class="layout-note" id="layoutNote">Раскладка Windows · Alt+Shift</p>
       <button type="submit" class="primary" id="submitButton">ВОЙТИ В ИГРУ <span>➜</span></button>
     </form>
     <button class="action-link" id="switchMode" type="button">СОЗДАТЬ АККАУНТ</button>
@@ -147,36 +147,17 @@ $("formTitle").textContent = mode === "login" ? "АВТОРИЗАЦИЯ" : "РЕ
 $("submitButton").innerHTML = mode === "login" ? "ВОЙТИ В ИГРУ <span>➜</span>" : "СОЗДАТЬ АККАУНТ <span>➜</span>";
 $("confirmWrap").classList.toggle("hidden", mode === "login");
 $("confirm").required = mode === "register";
+$("confirm").autocomplete = "email";
 $("switchMode").style.display = "none"; // mode is determined by MySQL, not by the user
-$("hint").textContent = mode === "login" ? "Введите пароль вашего аккаунта." : "Придумайте пароль от 6 до 64 символов.";
-for (const [button,field] of [["togglePassword","password"],["toggleConfirm","confirm"]]) {
+$("hint").textContent = mode === "login" ? "Введите пароль вашего аккаунта." : "Введите новый пароль и ваш Gmail.";
+for (const [button,field] of [["togglePassword","password"]]) {
   $(button).addEventListener("click", () => { $(field).type = $(field).type === "password" ? "text" : "password"; });
 }
 
-// Native Windows layout only: Chromium receives actual typed characters.
-// Indicator detects the layout from entered text; never changes the password.
-let detectedLayout = 'AUTO';
-for (const id of ['layoutToggle','layoutConfirm']) {
-  $(id).textContent = 'AUTO';
-  $(id).title = 'Используется системная раскладка Windows';
-  $(id).addEventListener('click', () => {
-    $('layoutNote').textContent = 'Переключайте язык через Alt+Shift в Windows';
-    $('password').focus();
-  });
-}
-for (const id of ['password','confirm']) {
- const field=$(id);
- field.autocomplete='off'; field.spellcheck=false;
- field.addEventListener('input', ev => {
-  const d=ev.data || '';
-  if (/[а-яё]/i.test(d)) detectedLayout='RU';
-  else if (/[a-z]/i.test(d)) detectedLayout='EN';
-  $('layoutToggle').textContent=detectedLayout;
-  $('layoutConfirm').textContent=detectedLayout;
-  $('layoutNote').textContent='Язык введённого текста: '+detectedLayout+' · смена Alt+Shift (Windows)';
- });
-}
-$('layoutNote').textContent='Системная раскладка Windows · Alt+Shift';
+// Use Windows input method directly. No custom keyboard layout conversion.
+$('password').spellcheck=false;
+$('confirm').spellcheck=false;
+$('layoutNote').textContent='Язык ввода определяется Windows · Alt+Shift';
 
 $("authForm").addEventListener("submit", (event) => {
   event.preventDefault();
@@ -185,15 +166,20 @@ $("authForm").addEventListener("submit", (event) => {
     $("hint").textContent = "Для CEF используйте 6–64 символа без пробелов.";
     return;
   }
-  if (mode === "register" && pass !== $("confirm").value) {
-    $("hint").textContent = "Пароли не совпадают.";
+  const email = $("confirm").value.trim();
+  if (mode === "register" && !/^[^\s@|]+@[^\s@|]+\.[^\s@|]+$/.test(email)) {
+    $("hint").textContent = "Введите действительный адрес электронной почты.";
+    return;
+  }
+  if (mode === "register" && pass.includes('|')) {
+    $("hint").textContent = "Символ | нельзя использовать в пароле.";
     return;
   }
   if (!window.cef || typeof window.cef.emit !== "function") {
     $("hint").textContent = "Откройте страницу через GTA с установленным CEF.";
     return;
   }
-  window.cef.emit(mode === "login" ? "cyber:login" : "cyber:register", pass);
+  window.cef.emit(mode === "login" ? "cyber:login" : "cyber:register", mode === "login" ? pass : pass + "|" + email);
   $("password").value = "";
   $("confirm").value = "";
   $("hint").textContent = "Запрос отправлен на сервер...";
@@ -204,6 +190,7 @@ $("authForm").addEventListener("submit", (event) => {
 #cyberProfile select,#cyberProfile input[type=number]{box-sizing:border-box;width:100%;height:43px;margin:6px 0 16px;padding:0 14px;background:#141421;color:#fff;border:1px solid #8c63f5;border-radius:7px;font:inherit;outline:none}
 #cyberProfile .form-label{display:block;margin-top:7px}#cyberProfile .primary{width:100%}
 </style>
+<style>body, .scene, .brand, .login, .topmark, h1, h2, p, span, label, button {user-select:none;-webkit-user-select:none} input,textarea{user-select:text!important;-webkit-user-select:text!important}</style>
 <script>
 (function(){
 const auth=document.querySelector('.login:not(#cyberProfile)');
@@ -223,9 +210,13 @@ profile.querySelector('form').addEventListener('submit',function(e){
  const hint=document.getElementById('profileHint');
  if(!Number.isInteger(age)||age<15||age>90){hint.textContent='Возраст должен быть от 15 до 90 лет.';return;}
  if(!window.cef||typeof window.cef.emit!=='function'){hint.textContent='Откройте регистрацию в игровом клиенте.';return;}
- window.cef.emit('cyber:profile',sex,nation,age);
- hint.textContent='Сохраняем персонажа...';
+ window.cef.emit('cyber:profile',String(sex)+'|'+String(nation)+'|'+String(age));
+ hint.textContent='Данные отправлены на сервер. Ожидаем подтверждения...';
  document.getElementById('profileSubmit').disabled=true;
+ setTimeout(function(){if(document.getElementById('cyberProfile').style.display!=='none'){
+  document.getElementById('profileSubmit').disabled=false;
+  hint.textContent='Если регистрация не завершилась, проверьте server_log.txt и попробуйте ещё раз.';
+ }},8000);
 });
 })();
 </script></body>
