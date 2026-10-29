@@ -1,9 +1,12 @@
+
 {
-  "version": "1.0.5",
-  "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/v1.0.5/CyberRussiaRPLauncher.exe",
-  "sha256": "15f73c1ef251ee3761b556d83c0521d5608a69c074f1fcdfcee93552f8326e712",
-  "size": 20994773
+  "version": "1.0.6",
+  "build": 6,
+  "url": "https://github.com/crownushka01-design/CyberRussiaRP-Launcher/releases/download/v1.0.6/CyberRussiaRPLauncher.exe",
+  "sha256": "45ef133fc4d9730c4686523a50d9c54b01b02c7e2fc9d4858c42c8d813448793",
+  "size": 20992403
 }
+
 
 
 
