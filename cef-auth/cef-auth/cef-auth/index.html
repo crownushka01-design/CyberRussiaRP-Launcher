@@ -6,7 +6,7 @@
 <title>CYBER RUSSIA RP — Авторизация</title>
 
 
-<link rel="stylesheet" href="style.css?v=20">
+<link rel="stylesheet" href="style.css?v=21">
 </head>
 <body>
 <main class="scene">
@@ -31,15 +31,15 @@
       <label class="sr-only" for="password">Пароль</label>
       <div class="input-wrap"><span class="lock">♙</span><input id="password" type="password" placeholder="Введите пароль" maxlength="128" required><button class="layout-toggle" id="layoutToggle" type="button" title="Язык набираемых букв: ENG / РУС" aria-label="Переключить раскладку пароля">ENG</button><button class="eye" id="togglePassword" type="button" aria-label="Показать пароль">◉</button></div>
       <div id="confirmWrap" class="input-wrap hidden"><span class="lock">♙</span><input id="confirm" type="password" placeholder="Подтвердите пароль" maxlength="128"><button class="layout-toggle" id="layoutConfirm" type="button" aria-label="Переключить раскладку подтверждения">ENG</button><button class="eye" id="toggleConfirm" type="button" aria-label="Показать пароль">◉</button></div>
-      <p class="layout-note" id="layoutNote" aria-hidden="true"></p>
+      <p class="layout-note" id="layoutNote" aria-hidden="true" hidden></p>
       <button type="submit" class="primary" id="submitButton">ВОЙТИ В ИГРУ <span>➜</span></button>
     </form>
     <button class="action-link" id="switchMode" type="button">СОЗДАТЬ АККАУНТ</button>
-    <p class="hint" id="hint" aria-live="polite">Введите пароль и нажмите кнопку входа.</p>
+    <p class="hint" id="hint" aria-live="polite" hidden></p>
   </section>
   
 </main>
 
-<script src="app.js?v=20"></script>
+<script src="app.js?v=21"></script>
 </body>
 </html>
