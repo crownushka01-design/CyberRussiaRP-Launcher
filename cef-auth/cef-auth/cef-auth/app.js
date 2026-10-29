@@ -15,32 +15,49 @@ for (const [button,field] of [["togglePassword","password"],["toggleConfirm","co
   $(button).addEventListener("click", () => { $(field).type = $(field).type === "password" ? "text" : "password"; });
 }
 
-// CEF cannot reliably query the active Windows keyboard layout before typing.
-// We display the language of the actual characters typed, without changing them.
+// CEF gets no reliable OS keyboard-layout API. Update instantly on Alt+Shift
+// when the shortcut reaches the page, and correct from actual typed characters.
 let layout = 'ENG';
-function updateLanguage(text) {
-  const chars = Array.from(text).reverse();
-  const latest = chars.find(c => /[A-Za-zА-Яа-яЁё]/.test(c));
-  if (latest) layout = /[А-Яа-яЁё]/.test(latest) ? 'РУС' : 'ENG';
+function paintLanguage() {
   $('layoutToggle').textContent = layout;
   $('layoutConfirm').textContent = layout;
-  $('layoutNote').textContent = 'Язык ввода: ' + layout + ' · Alt + Shift переключает Windows';
 }
+function flipLanguage() {
+  layout = layout === 'ENG' ? 'РУС' : 'ENG';
+  paintLanguage();
+}
+paintLanguage();
 for (const id of ['layoutToggle','layoutConfirm']) {
-  $(id).textContent = layout;
-  $(id).title = 'Текущий язык по введённым символам; смена через Alt + Shift';
+  $(id).title = 'ENG / РУС — нажмите, чтобы переключить отображение';
   $(id).addEventListener('click', () => {
-    $('layoutNote').textContent = 'Переключите раскладку в Windows: Alt + Shift';
+    flipLanguage();
     $(id === 'layoutToggle' ? 'password' : 'confirm').focus();
   });
 }
+let altShiftHandled = false;
+document.addEventListener('keydown', (e) => {
+  if (e.altKey && e.shiftKey && !altShiftHandled) {
+    altShiftHandled = true;
+    flipLanguage();
+  }
+});
+document.addEventListener('keyup', (e) => {
+  if (!e.altKey || !e.shiftKey) altShiftHandled = false;
+});
+window.addEventListener('blur', () => { altShiftHandled = false; });
 for (const id of ['password','confirm']) {
   const field = $(id);
   field.autocomplete = 'off';
   field.spellcheck = false;
-  field.addEventListener('input', () => updateLanguage(field.value));
+  field.addEventListener('input', () => {
+    const letters = field.value.match(/[A-Za-zА-Яа-яЁё]/g);
+    if (letters && letters.length) {
+      layout = /[А-Яа-яЁё]/.test(letters[letters.length-1]) ? 'РУС' : 'ENG';
+      paintLanguage();
+    }
+  });
 }
-$('layoutNote').textContent = 'ENG / РУС: язык определяется по введённым символам';
+$('layoutNote').textContent = '';
 
 $("authForm").addEventListener("submit", (event) => {
   event.preventDefault();
