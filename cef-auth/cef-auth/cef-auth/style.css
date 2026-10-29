@@ -59,3 +59,9 @@ h2{margin:0;font-size:clamp(16px,1.4vw,25px);letter-spacing:5.5px;white-space:no
 .layout-note{display:none!important}
 .login .hint{display:block;position:relative;margin:12px 0 0;min-height:16px;max-height:36px;line-height:1.35;font-size:11px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.9);opacity:.95}
 .login .primary{margin-top:12px}
+
+/* V21: show only one status message, when there is an actual error */
+.login .layout-note{display:none!important}
+.login .hint[hidden],.login .hint:empty{display:none!important}
+.login .hint{margin:13px 0 0;line-height:1.6;max-height:none;overflow:visible;position:static;font-size:12px}
+.login .primary{margin-top:16px}
